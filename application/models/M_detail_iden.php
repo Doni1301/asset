@@ -34,4 +34,12 @@ class M_detail_iden extends CI_Model {
 		$this->db->where('id',$id);
 		return $this->db->delete($this->_table);
 	}
+
+	public function lihat_nama_iden($komponen){
+		$query = $this->db->select('*');
+		$query = $this->db->where(['komponen' => $komponen]);
+		$query = $this->db->get($this->_table);
+		return $query->row();
+	}
+
 }

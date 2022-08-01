@@ -129,6 +129,11 @@ class Identifikasi extends CI_Controller{
 		echo json_encode($data);
 	}
 
+	public function get_all_iden(){
+		$data = $this->m_detail_iden->lihat_nama_iden($_POST['komponen']);
+		echo json_encode($data);
+	}
+
 	public function keranjang_barang(){
 		$this->load->view('identifikasi/keranjang');
 	}
@@ -162,15 +167,16 @@ class Identifikasi extends CI_Controller{
 		$dompdf->stream('Laporan Detail Penerimaan Tanggal ' . date('d F Y'), array("Attachment" => false));
 	}
 
-	public function edit($no_terima){
-		$this->data['title'] 			= 'Edit Penerimaan';
-		$this->data['penerimaan'] 		= $this->m_penerimaan->lihat_no_terima($no_terima);
-		$this->data['all_detail_terima'] = $this->m_detail_terima->get_detail_terima($no_terima);
+	public function edit($no_iden){
+		$this->data['title'] 			= 'Edit Identifikasi';
+		$this->data['identifikasi'] 	= $this->m_identifikasi->lihat_no_iden($no_iden);
+		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
+		$this->data['all_user'] = $this->m_user->lihat_user();
+		$this->data['all_komponen'] = $this->m_komponen->lihat_komponen();
+		$this->data['all_sub'] = $this->m_sub->lihat_sub();
 		$this->data['no'] 				= 1;
-		$this->data['petugas'] 			= $this->m_petugas->get_petugas($this->data['penerimaan']->nama_petugas);
-		$this->data['all_barang'] 		= $this->m_barang->lihat_stok_terima();
 
-		$this->load->view('penerimaan/edit', $this->data);
+		$this->load->view('identifikasi/edit', $this->data);
 	}
 
 	public function get_detail($no_iden){

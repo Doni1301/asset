@@ -10,7 +10,7 @@
 		<?php $this->load->view('partials/sidebar.php') ?>
 
 		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content" data-url="<?= base_url('retur') ?>">
+			<div id="content" data-url="<?= base_url('identifikasi') ?>">
 				<!-- load Topbar -->
 				<?php $this->load->view('partials/topbar.php') ?>
 
@@ -20,7 +20,7 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 					<div class="float-right">
-						<a href="<?= base_url('retur') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
+						<a href="<?= base_url('identifikasi') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
 					</div>
 				</div>
 				<hr>
@@ -29,106 +29,133 @@
 						<div class="card shadow">
 							<div class="card-header"><strong>Isi Form Dibawah Ini!</strong></div>
 							<div class="card-body">
-                                <form action="<?= base_url('retur/proses_edit') ?>" id="form-edit" method="POST">
-                            <h5>Data Petugas</h5>
+                                <form action="<?= base_url('identifikasi/proses_edit') ?>" id="form-edit" method="POST">
+                            <h5>Data Identifikasi</h5>
                                 <hr>
                                 <div class="form-row">
-                                    <div class="form-group col-2">
-                                        <label>No. Retur</label>
-                                        <input type="text" name="no_retur" value="<?= $retur->no_retur ?>" readonly class="form-control">
-                                    </div>
-                                    <div class="form-group col-3">
-                                        <label>Kode Petugas</label>
-                                        <input type="hidden" name="kode_petugas" value="<?= $this->session->login['kode'] ?>" />
-                                        <input type="text" name="" value="<?= $retur->kode_petugas ?? '' ?>" readonly class="form-control">
-                                    </div>
-                                    <div class="form-group col-3">
-                                        <label>Nama Petugas</label>
-                                        <input type="hidden" name="nama_petugas" value="<?= $this->session->login['nama'] ?? '' ?>">
-                                        <input type="text" name="" value="<?= $retur->nama_petugas ?>" readonly class="form-control">
-                                    </div>
-                                    <div class="form-group col-2">
-                                        <label>Tanggal Retur</label>
-                                        <input type="text" name="tgl_retur" value="<?= $retur->tgl_retur ?>" readonly class="form-control">
-                                    </div>
-                                    <div class="form-group col-2">
-                                        <label>Jam</label>
-                                        <input type="text" name="jam_retur" value="<?= $retur->jam_retur ?>" readonly class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <h5>Keterangan</h5>
-                                        <hr>
-                                        <div class="form-row">
-                                            <div class="form-group col-12">
-                                            <label>Keterangan</label>
-                                            <input type="text" name="keterangan" value="<?= $retur->keterangan ?>" class="form-control" autocomplete="off">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!-- <form action="<?= base_url() ?>retur/add_detail" method="post"> -->
-                                            <input type="hidden" name="no_retur" value="<?= $retur->no_retur ?>">  
-                                            <h5>Data Barang</h5>
-                                            <hr>
-                                            <div class="form-row">
-                                                <div class="form-group col-4">
-                                                    <label for="nama_barang">Nama Barang</label>
-                                                    <select name="nama_barang" id="nama_barang" class="form-control">
-                                                        <option value="">Pilih Barang</option>
-                                                        <?php foreach ($all_barang as $barang): ?>
-                                                            <option value="<?= $barang->nama_barang ?>"><?= $barang->nama_barang ?></option>
-                                                        <?php endforeach ?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-4">
-                                                    <label>Kode Barang</label>
-                                                    <input type="text" name="kode_barang" readonly class="form-control">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label>Jumlah</label>
-                                                    <input type="number" name="jumlah" class="form-control" readonly min='1'>
-                                                </div>
-                                                <div class="form-group col-1">
-                                                    <label for="">&nbsp;</label>
-                                                    <button disabled type="button" class="btn btn-primary btn-block" id="tambah"><i class="fa fa-plus"></i></button>
-                                                </div>
-                                                <input type="hidden" name="satuan" value="">
-                                            </div>
-                                        <!-- </form> -->
-                                    </div>
-                                </div>
+									<div class="form-group col-2">
+										<label>No. Identifikasi</label>
+										<input type="text" name="no_iden" value="<?= $identifikasi->no_iden?>" readonly class="form-control">
+									</div>
+									<div class="form-group col-2">
+										<label>Tanggal Identifikasi</label>
+										<input type="text" name="tgl_iden" value="<?= $identifikasi->tgl_iden?>" readonly class="form-control">
+									</div>
+									<div class="form-group col-2">
+										<label>Jam</label>
+										<input type="text" name="jam_iden" value="<?= $identifikasi->jam_iden?>" readonly class="form-control">
+									</div>
+								</div>
+                                <br>
+								<div class="row">
+										<div class="col-md-12">
+											<h5>Data User</h5>
+											<hr>
+											<div class="form-row">
+												<div class="form-group col-4">
+													<label for="nama">Nama User</label>
+													<input type="text" name="nama" value="<?= $identifikasi->nama ?>" readonly class="form-control">
+												</div>
+												<div class="form-group col-2">
+													<label>Kode User</label>
+													<input type="text" name="kode" value="<?= $identifikasi->kode ?>" readonly class="form-control">
+												</div>
+												<div class="form-group col-3">
+													<label>Departement</label>
+													<input type="text" name="dept" value="<?= $identifikasi->dept ?>" readonly class="form-control">
+												</div>
+												<div class="form-group col-3">
+													<label>PIC</label>
+													<input type="text" name="pic" value="<?= $identifikasi->pic ?>" readonly class="form-control">
+												</div>
+											</div>
+										</div>
+								</div>
+                                <br>
+								<div class="row">
+										<div class="col-md-12">
+											<h5>Data Input</h5>
+											<hr>
+											<div class="form-row">
+												<div class="form-group col-2">
+													<label for="komponen">Komponen</label>
+													<select name="komponen" id="komponen" class="form-control">
+														<option value="">Pilih Komponen</option>
+														<?php foreach ($all_komponen as $komponen): ?>
+															<option value="<?= $komponen->nama ?>"><?= $komponen->nama ?></option>
+														<?php endforeach ?>
+													</select>
+												</div>
+												<div class="form-group col-2">
+													<label for="sub">Sub Komponen</label>
+													<select name="sub" id="sub" class="form-control">
+														<option value="">Pilih Sub Komponen</option>
+														<?php foreach ($all_sub as $sub): ?>
+															<option value="<?= $sub->nama ?>"><?= $sub->nama ?></option>
+														<?php endforeach ?>
+													</select>
+												</div>
+												<div class="form-group col-2">
+													<label>Merk/Type/Model</label>
+													<input type="text" name="keterangan" value="" class="form-control">
+												</div>
+												<div class="form-group col-2">
+													<label>Serial Number</label>
+													<input type="text" name="sn" value="" class="form-control">
+												</div>
+												<div class="form-group col-1">
+													<label>Exp Garansi</label>
+													<input type="text" name="exp" value="" class="form-control">
+												</div>
+												<div class="form-group col-2">
+													<label>Vendor</label>
+													<input type="text" name="vendor" value="" class="form-control">
+												</div>
+												<div class="form-group col-1">
+													<label for="">&nbsp;</label>
+													<button disabled type="button" class="btn btn-primary btn-block" id="tambah"><i class="fa fa-plus"></i></button>
+												</div>
+											</div>
+										</div>
+								</div>
                                 <div class="keranjang">
                                     <h5>Detail Pengembalian</h5>
                                     <hr>
                                     <table class="table table-bordered" id="keranjang">
                                         <thead>
                                             <tr>
-                                                <td width="35%">Nama Barang</td>
-                                                <td width="15%">Kode Barang</td>
-                                                <td width="15%">Jumlah</td>
-                                                <td width="10%">Satuan</td>
-                                                <td width="15%">Aksi</td>
+                                                <td>Komponen</td>
+												<td>Sub Komponen</td>
+												<td>Keterangan</td>
+												<td>Serial Number</td>
+												<td>Exp Garansi</td>
+												<td>Vendor</td>
+												<td>Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($all_detail_retur as $key => $dRetur): ?>
+                                            <?php foreach($all_detail_iden as $key => $diden): ?>
                                                 <tr class="row-keranjang">
-                                                    <td class="nama_barang"><?= $dRetur->nama_barang ?>
-                                                        <input type="hidden" name="nama_barang_hidden[]" value="<?= $dRetur->nama_barang ?>">
+                                                    <td class="komponen"><?= $diden->komponen ?>
+                                                        <input type="hidden" name="nama_barang_hidden[]" value="<?= $diden->komponen ?>">
                                                     </td>
-                                                    <td class="kode_barang"><?= $dRetur->kode_barang ?>
-                                                        <input type="hidden" name="kode_barang_hidden[]" value="<?= $dRetur->kode_barang ?>">
+                                                    <td class="sub"><?= $diden->sub ?>
+                                                        <input type="hidden" name="kode_barang_hidden[]" value="<?= $diden->sub ?>">
                                                     </td>
-                                                    <td class="jumlah"><?= $dRetur->jumlah ?>
-                                                        <input type="hidden" name="jumlah_hidden[]" value="<?= $dRetur->jumlah ?>">
+                                                    <td class="keterangan"><?= $diden->keterangan ?>
+                                                        <input type="hidden" name="jumlah_hidden[]" value="<?= $diden->keterangan ?>">
                                                     </td>
-                                                    <td class="satuan"><?= $dRetur->satuan ?>
-                                                        <input type="hidden" name="satuan_hidden[]" value="<?= $dRetur->satuan ?>">
+                                                    <td class="sn"><?= $diden->sn ?>
+                                                        <input type="hidden" name="satuan_hidden[]" value="<?= $diden->sn ?>">
+                                                    </td>
+                                                    <td class="exp"><?= $diden->exp ?>
+                                                        <input type="hidden" name="satuan_hidden[]" value="<?= $diden->exp ?>">
+                                                    </td>
+                                                    <td class="vendor"><?= $diden->vendor ?>
+                                                        <input type="hidden" name="satuan_hidden[]" value="<?= $diden->vendor ?>">
                                                     </td>
                                                     <td class="aksi">
-                                                        <button type="button" class="btn btn-danger btn-sm" id="tombol-hapus" data-nama-barang="<?= $dRetur->nama_barang ?>"><i class="fa fa-trash"></i></button>
+                                                        <button type="button" class="btn btn-danger btn-sm" id="tombol-hapus" data-nama-komponen="<?= $diden->komponen ?>"><i class="fa fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -165,31 +192,21 @@
 			   	}
 			})
 
-			$('#nama_barang').on('change', function(){
-
+            $('#nama').on('change', function(){
+				console.log($(this).val());
 				if($(this).val() == '') reset()
 				else {
-					const url_get_all_barang = $('#content').data('url') + '/get_all_barang'
+					const url_get_all_user = $('#content').data('url') + '/get_all_user'
 					$.ajax({
-						url: url_get_all_barang,
+						url: url_get_all_user,
 						type: 'POST',
 						dataType: 'json',
-						data: {nama_barang: $(this).val()},
-                        cache: false,
+						data: {nama: $(this).val()},
 						success: function(data){
-							$('input[name="kode_barang"]').val(data.kode_barang)
-							$('input[name="harga_barang"]').val(data.harga_jual)
-							$('input[name="jumlah"]').val(1)
-							$('input[name="satuan"]').val(data.satuan)
-							$('input[name="max_hidden"]').val(data.stok)
-							$('input[name="jumlah"]').prop('readonly', false)
+							$('input[name="kode"]').val(data.kode)
+							$('input[name="dept"]').val(data.dept)
+							$('input[name="pic"]').val(data.pic)
 							$('button#tambah').prop('disabled', false)
-
-							$('input[name="sub_total"]').val($('input[name="jumlah"]').val() * $('input[name="harga_barang"]').val())
-							
-							$('input[name="jumlah"]').on('keydown keyup change blur', function(){
-								$('input[name="sub_total"]').val($('input[name="jumlah"]').val() * $('input[name="harga_barang"]').val())
-							})
 						}
 					})
 				}
@@ -198,64 +215,59 @@
             $(document).on('click', '#tambah', function(e){
                 const url_keranjang_barang = $('#content').data('url') + '/keranjang_barang'
                 const data_keranjang = {
-                    nama_barang: $('select[name="nama_barang"]').val(),
-                    kode_barang: $('input[name="kode_barang"]').val(),
-                    jumlah: $('input[name="jumlah"]').val(),
-                    satuan: $('input[name="satuan"]').val(),
+					komponen: $('select[name="komponen"]').val(),
+					sub: $('select[name="sub"]').val(),
+					keterangan: $('input[name="keterangan"]').val(),
+					sn: $('input[name="sn"]').val(),
+					exp: $('input[name="exp"]').val(),	
+					vendor: $('input[name="vendor"]').val(),
                 }
 
-                $.ajax({
-                    url: url_keranjang_barang,
-                    type: 'POST',
-                    data: data_keranjang,
-                    success: function(data){
-                        if($('select[name="nama_barang"]').val() == data_keranjang.nama_barang) $('option[value="' + data_keranjang.nama_barang + '"]').hide()
-                        reset()
+				$.ajax({
+					url: url_keranjang_barang,
+					type: 'POST',
+					data: data_keranjang,
+					success: function(data){
+						reset()
 
-                        $('table#keranjang tbody').append(data)
-                        $('tfoot').show()
-
-                        $('#total').html('<strong>' + hitung_total() + '</strong>')
-                        $('input[name="total_hidden"]').val(hitung_total())
-                    }
-                })
+						$('table#keranjang tbody').append(data)
+						$('tfoot').show()
+					}
+				})
             })
 
-            var detail_pengembalian = $( "table#keranjang tbody" ).find("button[data-nama-barang]");
-            detail_pengembalian.each(function(i){
-                    $('option[value="' + $(this).data('nama-barang') + '"]').hide()
+            var detail_iden = $( "table#keranjang tbody" ).find("button[data-nama-komponen]");
+            detail_iden.each(function(i){
+                    $('option[value="' + $(this).data('nama-komponen') + '"]').hide()
             });
 
             $(document).on('click', '#tombol-hapus', function(){
-                $(this).closest('.row-keranjang').remove()
+				$(this).closest('.row-keranjang').remove()
 
-                $('option[value="' + $(this).data('nama-barang') + '"]').show()
+				$('option[value="' + $(this).data('komponen').data('sub') + '"]').show()
 
-                if($('tbody').children().length == 0) $('tfoot').hide()
-            })
+				if($('tbody').children().length == 0) $('tfoot').hide()
+			})
 
             $('button[type="submit"]').on('click', function(){
-                $('input[name="kode_barang"]').prop('disabled', true)
-                $('select[name="nama_barang"]').prop('disabled', true)
-                $('input[name="satuan"]').prop('disabled', true)
-                $('input[name="jumlah"]').prop('disabled', true)
-            })
-
-			function hitung_total(){
-				let total = 0;
-				$('.sub_total').each(function(){
-					total += parseInt($(this).text())
-				})
-
-				return total;
-			}
+				$('input[name="komponen"]').prop('disabled', true)
+				$('select[name="sub"]').prop('disabled', true)
+				$('input[name="keterangan"]').prop('disabled', true)
+				$('input[name="sn"]').prop('disabled', true)
+				$('input[name="exp"]').prop('disabled', true)
+				$('input[name="vedor"]').prop('disabled', true)
+			})
 
 			function reset(){
-				$('#nama_barang').val('')
-				$('input[name="kode_barang"]').val('')
-				$('input[name="jumlah"]').val('')
-				$('input[name="jumlah"]').prop('readonly', true)
-				$('button#tambah').prop('disabled', true)
+				$('#komponen').val('')
+				$('#sub').val('')
+				$('input[name="komponen"]').val('')
+				$('input[name="sub"]').val('')
+				$('input[name="keterangan"]').val('')
+				$('input[name="sn"]').val('')
+				$('input[name="exp"]').val('')
+				$('input[name="vendor"]').val('')
+				$('button#tambah').prop('enable', true)
 			}
 		})
 	</script>
