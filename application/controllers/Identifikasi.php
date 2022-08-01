@@ -114,17 +114,13 @@ class Identifikasi extends CI_Controller{
 		$this->load->view('identifikasi/detail', $this->data);
 	}
 
-	public function hapus($no_terima){
-		$details = $this->m_detail_terima->lihat_no_terima($no_terima);
-		foreach ($details as $detail) {
-			$this->m_barang->min_stok($detail->jumlah, $detail->nama_barang);
-		}
-		if($this->m_penerimaan->hapus($no_terima) && $this->m_detail_terima->hapus($no_terima)){
-			$this->session->set_flashdata('success', 'Invoice Penerimaan <strong>Berhasil</strong> Dihapus!');
-			redirect('penerimaan');
+	public function hapus($no_iden){
+		if($this->m_identifikasi->hapus($no_iden) && $this->m_detail_iden->hapus($no_iden)){
+			$this->session->set_flashdata('success', 'Identifikasi <strong>Berhasil</strong> Dihapus!');
+			redirect('identifikasi');
 		}else {
-			$this->session->set_flashdata('error', 'Invoice Penerimaan <strong>Gagal</strong> Dihapus!');
-			redirect('penerimaan');
+			$this->session->set_flashdata('error', 'Invoice Identifikasi <strong>Gagal</strong> Dihapus!');
+			redirect('identifikasi');
 		}
 	}
 

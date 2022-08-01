@@ -12,8 +12,8 @@ class M_detail_iden extends CI_Model {
 		return $query->result();
 	}
 
-	public function hapus($no_terima){
-		return $this->db->delete($this->_table, ['no_terima' => $no_terima]);
+	public function hapus($no_iden){
+		return $this->db->delete($this->_table, ['no_iden' => $no_iden]);
 	}
 
 	public function get_detail_iden($no_iden){

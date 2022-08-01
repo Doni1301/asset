@@ -35,7 +35,7 @@ class M_identifikasi extends CI_Model {
 		return $query;
 	}
 
-	public function hapus($no_terima){
-		return $this->db->delete($this->_table, ['no_terima' => $no_terima]);
+	public function hapus($no_iden){
+		return $this->db->delete($this->_table, ['no_iden' => $no_iden]);
 	}
 }
