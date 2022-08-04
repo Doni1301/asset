@@ -60,8 +60,8 @@
 					<span>Identifikasi</span></a>
 			</li>
 
-			<li class="nav-item <?= $aktif == 'penerimaan' ? 'active' : '' ?>">
-				<a class="nav-link" href="<?= base_url('penerimaan') ?>">
+			<li class="nav-item <?= $aktif == 'det_soft' ? 'active' : '' ?>">
+				<a class="nav-link" href="<?= base_url('det_soft') ?>">
 					<i class="fas fa-fw fa-file-invoice"></i>
 					<span>Lisensi</span></a>
 			</li>

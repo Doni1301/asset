@@ -10,7 +10,7 @@
 		<?php $this->load->view('partials/sidebar.php') ?>
 
 		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content" data-url="<?= base_url('identifikasi') ?>">
+			<div id="content" data-url="<?= base_url('det_soft') ?>">
 				<!-- load Topbar -->
 				<?php $this->load->view('partials/topbar.php') ?>
 
@@ -20,8 +20,8 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 					<div class="float-right">
-						<a href="<?= base_url('identifikasi/export') ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
-						<a href="<?= base_url('identifikasi/tambah') ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah</a>
+						<a href="<?= base_url('det_soft/export') ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
+						<a href="<?= base_url('det_soft/tambah') ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah</a>
 					</div>
 				</div>
 				<hr>
@@ -41,16 +41,15 @@
 					</div>
 				<?php endif ?>
 				<div class="card shadow">
-					<div class="card-header"><strong>Daftar Pengembalian</strong></div>
+					<div class="card-header"><strong>Daftar Detail Software</strong></div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<td>No</td>
+										<td>No Input</td>
 										<td>No Identifikasi</td>
-										<td>Tanggal Identifikasi</td>
-										<td>Jam Identifikasi</td>
 										<td>Nama User</td>
 										<td>Kode User</td>
 										<td>Departemen</td>
@@ -59,20 +58,19 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($all_identifikasi as $identifikasi): ?>
+									<?php foreach ($all_det_soft as $det_soft): ?>
 										<tr>
 											<td><?= $no++ ?></td>
-											<td><?= $identifikasi->no_iden ?></td>
-											<td><?= $identifikasi->tgl_iden ?></td>
-											<td><?= $identifikasi->jam_iden ?></td>
-											<td><?= $identifikasi->nama ?></td>
-											<td><?= $identifikasi->kode ?></td>
-											<td><?= $identifikasi->dept ?></td>
-											<td><?= $identifikasi->pic ?></td>
+											<td><?= $det_soft->no_input ?></td>
+											<td><?= $det_soft->no_iden ?></td>
+											<td><?= $det_soft->nama ?></td>
+											<td><?= $det_soft->kode ?></td>
+											<td><?= $det_soft->dept ?></td>
+											<td><?= $det_soft->pic ?></td>
 											<td>
-												<a href="<?= base_url('identifikasi/detail/' . $identifikasi->no_iden) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-												<a href="<?= base_url('identifikasi/edit/'.$identifikasi->no_iden) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-												<a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('identifikasi/hapus/' . $identifikasi->no_iden) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+												<a href="<?= base_url('det_soft/detail/' . $det_soft->no_input) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+												<a href="<?= base_url('det_soft/edit/'.$det_soft->no_input) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+												<a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('det_soft/hapus/' . $det_soft->no_input) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
 									<?php endforeach ?>
