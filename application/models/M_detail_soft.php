@@ -7,8 +7,8 @@ class M_detail_soft extends CI_Model {
 		return $this->db->insert_batch($this->_table, $data);
 	}
 
-	public function lihat_no_iden($no_iden){
-		$query = $this->db->get_where($this->_table, ['no_iden'=>$no_iden]);
+	public function lihat_no_input($no_input){
+		$query = $this->db->get_where($this->_table, ['no_input'=>$no_input]);
 		return $query->result();
 	}
 

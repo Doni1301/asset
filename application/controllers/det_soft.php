@@ -105,13 +105,13 @@ class Det_soft extends CI_Controller{
 		}
 	}
 
-	public function detail($no_iden){
-		$this->data['title'] = 'Detail Identifikasi';
-		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
-		$this->data['identifikasi'] = $this->m_identifikasi->lihat_no_iden($no_iden);
+	public function detail($no_input){
+		$this->data['title'] = 'Detail Identifikasi Software';
+		$this->data['all_detail_soft'] = $this->m_detail_soft->lihat_no_input($no_input);
+		$this->data['det_soft'] = $this->m_det_soft->lihat_no_input($no_input);
 		$this->data['no'] = 1;
 
-		$this->load->view('identifikasi/detail', $this->data);
+		$this->load->view('det_soft/detail', $this->data);
 	}
 
 	public function hapus($no_input){

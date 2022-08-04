@@ -10,7 +10,7 @@
 		<?php $this->load->view('partials/sidebar.php') ?>
 
 		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content" data-url="<?= base_url('identifikasi') ?>">
+			<div id="content" data-url="<?= base_url('det_soft') ?>">
 				<!-- load Topbar -->
 				<?php $this->load->view('partials/topbar.php') ?>
 
@@ -20,8 +20,8 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 					<div class="float-right">
-						<a href="<?= base_url('identifikasi/export_detail/' . $identifikasi->no_iden) ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
-						<a href="<?= base_url('identifikasi') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
+						<a href="<?= base_url('det_soft/export_detail/' . $det_soft->no_input) ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
+						<a href="<?= base_url('det_soft') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
 					</div>
 				</div>
 				<hr>
@@ -41,7 +41,7 @@
 					</div>
 				<?php endif ?>
 				<div class="card shadow">
-					<div class="card-header"><strong><?= $title ?> - <?= $identifikasi->no_iden ?></strong></div>
+					<div class="card-header">No Input - <?= $det_soft->no_input ?></strong></div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-6">
@@ -49,17 +49,27 @@
 									<tr>
 										<td><strong>No Identifikasi</strong></td>
 										<td>:</td>
-										<td><?= $identifikasi->no_iden ?></td>
+										<td><?= $det_soft->no_iden ?></td>
 									</tr>
 									<tr>
 										<td><strong>Nama User</strong></td>
 										<td>:</td>
-										<td><?= $identifikasi->nama ?></td>
+										<td><?= $det_soft->nama ?></td>
 									</tr>
 									<tr>
-										<td><strong>Waktu Identifikasi</strong></td>
+										<td><strong>Kode User</strong></td>
 										<td>:</td>
-										<td><?= $identifikasi->tgl_iden ?> - <?= $identifikasi->jam_iden ?></td>
+										<td><?= $det_soft->kode ?></td>
+									</tr>
+									<tr>
+										<td><strong>Departement</strong></td>
+										<td>:</td>
+										<td><?= $det_soft->dept ?></td>
+									</tr>
+									<tr>
+										<td><strong>PIC</strong></td>
+										<td>:</td>
+										<td><?= $det_soft->pic ?></td>
 									</tr>
 								</table>
 							</div>
@@ -72,24 +82,20 @@
 										<tr>
 											<td><strong>No</strong></td>
 											<td><strong>Komponen</strong></td>
-											<td><strong>Sub Komponen</strong></td>
 											<td><strong>Keterangan</strong></td>
-											<td><strong>Serial Number</strong></td>
-											<td><strong>Exp Garansi</strong></td>
+											<td><strong>Produk</strong></td>
 											<td><strong>Vendor</strong></td>
 
 										</tr>
 									</thead>
 									<tbody>
-										<?php foreach ($all_detail_iden as $detail_iden): ?>
+										<?php foreach ($all_detail_soft as $detail_soft): ?>
 											<tr>
 												<td><?= $no++ ?></td>
-												<td><?= $detail_iden->komponen ?></td>
-												<td><?= $detail_iden->sub ?></td>
-												<td><?= $detail_iden->keterangan ?></td>
-												<td><?= $detail_iden->sn ?></td>
-												<td><?= $detail_iden->exp ?></td>
-												<td><?= $detail_iden->vendor ?></td>
+												<td><?= $detail_soft->komponen ?></td>
+												<td><?= $detail_soft->keterangan ?></td>
+												<td><?= $detail_soft->produk ?></td>
+												<td><?= $detail_soft->vendor ?></td>
 											</tr>
 										<?php endforeach ?>
 									</tbody>
