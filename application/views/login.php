@@ -53,8 +53,9 @@
 											</button>
 										</div>
 									<?php endif ?>
-										<img src="<?= base_url('sb-admin') ?>/img/bw.png" >
+										<img src="<?= base_url('sb-admin') ?>/img/bw.png" class="rounded" width="600px" margin="100px">
 									</div>
+									<br>
 									<form class="user" method="POST" action="<?= base_url('login/proses_login') ?>">
 										<div class="form-group">
 											<input type="text" class="form-control" id="username" placeholder="Masukkan Username" autocomplete="off" required name="username">
