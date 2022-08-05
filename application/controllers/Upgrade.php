@@ -10,9 +10,7 @@ class Upgrade extends CI_Controller{
 		$this->load->model('M_sub', 'm_sub');
 		$this->load->model('M_software', 'm_software');
 		$this->load->model('M_identifikasi', 'm_identifikasi');
-		$this->load->model('M_barang', 'm_barang');
 		$this->load->model('M_detail_iden', 'm_detail_iden');
-		$this->load->model('M_supplier', 'm_supplier');
 		$this->load->model('M_det_soft', 'm_det_soft');
 		$this->load->model('M_detail_soft', 'm_detail_soft');
 		$this->load->model('M_upgrade', 'm_upgrade');
