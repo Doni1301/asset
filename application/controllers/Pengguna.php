@@ -10,7 +10,7 @@ class Pengguna extends CI_Controller {
 	}
 
 	public function index(){
-		$this->data['title'] = 'Data Admin';
+		$this->data['title'] = 'Data Pengguna';
 		$this->data['all_pengguna'] = $this->m_pengguna->lihat();
 		$this->data['no'] = 1;
 
@@ -18,10 +18,6 @@ class Pengguna extends CI_Controller {
 	}
 
 	public function tambah(){
-		if ($this->session->login['role'] == 'petugas'){
-			$this->session->set_flashdata('error', 'Tambah data hanya untuk admin!');
-			redirect('dashboard');
-		}
 
 		$this->data['title'] = 'Tambah Admin';
 
@@ -29,10 +25,6 @@ class Pengguna extends CI_Controller {
 	}
 
 	public function proses_tambah(){
-		if ($this->session->login['role'] == 'petugas'){
-			$this->session->set_flashdata('error', 'Tambah data hanya untuk admin!');
-			redirect('dashboard');
-		}
 		$pass = $this->input->post('password');
 		$password = password_hash($pass, PASSWORD_DEFAULT);
 		$data = [
@@ -43,31 +35,23 @@ class Pengguna extends CI_Controller {
 		];
 
 		if($this->m_pengguna->tambah($data)){
-			$this->session->set_flashdata('success', 'Data Petugas <strong>Berhasil</strong> Ditambahkan!');
+			$this->session->set_flashdata('success', 'Data Pengguna <strong>Berhasil</strong> Ditambahkan!');
 			redirect('pengguna');
 		} else {
-			$this->session->set_flashdata('error', 'Data Petugas <strong>Gagal</strong> Ditambahkan!');
+			$this->session->set_flashdata('error', 'Data Pengguna <strong>Gagal</strong> Ditambahkan!');
 			redirect('pengguna');
 		}
 	}
 
 	public function ubah($id){
-		if ($this->session->login['role'] == 'petugas'){
-			$this->session->set_flashdata('error', 'Ubah data hanya untuk admin!');
-			redirect('dashboard');
-		}
 
-		$this->data['title'] = 'Ubah Admin';
+		$this->data['title'] = 'Ubah Pengguna';
 		$this->data['pengguna'] = $this->m_pengguna->lihat_id($id);
 
 		$this->load->view('pengguna/ubah', $this->data);
 	}
 
 	public function proses_ubah($id){
-		if ($this->session->login['role'] == 'petugas'){
-			$this->session->set_flashdata('error', 'Ubah data hanya untuk admin!');
-			redirect('dashboard');
-		}
 		$pass = $this->input->post('password');
 		$password = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -79,25 +63,21 @@ class Pengguna extends CI_Controller {
 		];
 
 		if($this->m_pengguna->ubah($data, $id)){
-			$this->session->set_flashdata('success', 'Data Petugas <strong>Berhasil</strong> Diubah!');
+			$this->session->set_flashdata('success', 'Data Pengguna <strong>Berhasil</strong> Diubah!');
 			redirect('pengguna');
 		} else {
-			$this->session->set_flashdata('error', 'Data Petugas <strong>Gagal</strong> Diubah!');
+			$this->session->set_flashdata('error', 'Data Pengguna <strong>Gagal</strong> Diubah!');
 			redirect('pengguna');
 		}
 	}
 
 	public function hapus($id){
-		if ($this->session->login['role'] == 'petugas'){
-			$this->session->set_flashdata('error', 'Ubah data hanya untuk admin!');
-			redirect('dashboard');
-		}
 
 		if($this->m_pengguna->hapus($id)){
-			$this->session->set_flashdata('success', 'Data Petugas <strong>Berhasil</strong> Dihapus!');
+			$this->session->set_flashdata('success', 'Data Pengguna <strong>Berhasil</strong> Dihapus!');
 			redirect('pengguna');
 		} else {
-			$this->session->set_flashdata('error', 'Data Petugas <strong>Gagal</strong> Dihapus!');
+			$this->session->set_flashdata('error', 'Data Pengguna <strong>Gagal</strong> Dihapus!');
 			redirect('pengguna');
 		}
 	}
