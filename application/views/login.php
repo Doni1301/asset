@@ -38,16 +38,16 @@
 							<div class="col-lg-12">
 								<div class="p-5">
 									<div class="text-center">
-									<?php if ($this->session->flashdata('success')) : ?>
+									<?php if ($this->session->flashdata('success-login')) : ?>
 										<div class="alert alert-success alert-dismissible fade show" role="alert">
-											<?= $this->session->flashdata('success') ?>
+											<?= $this->session->flashdata('success-login') ?>
 											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-									<?php elseif($this->session->flashdata('error')) : ?>
+									<?php elseif($this->session->flashdata('error-login')) : ?>
 										<div class="alert alert-danger alert-dismissible fade show" role="alert">
-											<?= $this->session->flashdata('error') ?>
+											<?= $this->session->flashdata('error-login') ?>
 											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 											</button>

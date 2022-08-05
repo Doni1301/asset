@@ -30,14 +30,14 @@ class Login extends CI_Controller{
 				];
 
 				$this->session->set_userdata('login', $session);
-				$this->session->set_flashdata('success', '<strong>Login</strong> Berhasil!');
+				$this->session->set_flashdata('success-login', '<strong>Login</strong> Berhasil!');
 				redirect('dashboard');
 			} else {
-				$this->session->set_flashdata('error', 'Password Salah!');
+				$this->session->set_flashdata('error-login', 'Password Salah!');
 				redirect();
 			}
 		} else {
-			$this->session->set_flashdata('error', 'Username Salah!');
+			$this->session->set_flashdata('error-login', 'Username Salah!');
 			redirect();
 		}
 	}
