@@ -1,202 +1,207 @@
 <?php
 use Dompdf\Dompdf;
-class Retur extends CI_Controller{
+class Upgrade extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
-		if($this->session->login['role'] != 'petugas' && $this->session->login['role'] != 'admin') redirect();
 		date_default_timezone_set('Asia/Manila');
-		$this->data['aktif'] = 'retur';
+		$this->data['aktif'] = 'upgrade';
+		$this->load->model('M_user', 'm_user');
+		$this->load->model('M_komponen', 'm_komponen');
+		$this->load->model('M_sub', 'm_sub');
+		$this->load->model('M_software', 'm_software');
+		$this->load->model('M_identifikasi', 'm_identifikasi');
 		$this->load->model('M_barang', 'm_barang');
-		$this->load->model('M_retur', 'm_retur');
-		$this->load->model('M_detail_retur', 'm_detail_retur');
-		$this->load->model('M_petugas', 'm_petugas');
+		$this->load->model('M_detail_iden', 'm_detail_iden');
+		$this->load->model('M_supplier', 'm_supplier');
+		$this->load->model('M_det_soft', 'm_det_soft');
+		$this->load->model('M_detail_soft', 'm_detail_soft');
+		$this->load->model('M_upgrade', 'm_upgrade');
+		$this->load->model('M_detail_up', 'm_detail_up');
 	}
 
 	public function index(){
-		$this->data['title'] = 'Transaksi Pengembalian';
-		$this->data['all_retur'] = $this->m_retur->lihat();
+		$this->data['title'] = 'Transaksi Detail History';
+		$this->data['all_upgrade'] = $this->m_upgrade->lihat();
 		$this->data['no'] = 1;
 
-		$this->load->view('retur/lihat', $this->data);
+		$this->load->view('upgrade/lihat', $this->data);
 	}
 
 	public function tambah(){
-		$this->data['title'] = 'Tambah Transaksi';
-		$this->data['all_barang'] = $this->m_barang->lihat_stok_retur();
+		$this->data['title'] = 'Tambah History';
+		$this->data['all_identifikasi'] = $this->m_identifikasi->lihat();
+		$this->data['all_user'] = $this->m_user->lihat_user();
 
-		$this->load->view('retur/tambah', $this->data);
+		$this->load->view('upgrade/tambah', $this->data);
 	}
 
 	public function proses_tambah(){
-		$jumlah_barang_retur = count($this->input->post('nama_barang_hidden'));
+		$jumlah_komponen_diterima = count($this->input->post('komponen_hidden'));
 
-		$data_retur = [
-			'no_retur' => $this->input->post('no_retur'),
-			'tgl_retur' => $this->input->post('tgl_retur'),
-			'jam_retur' => $this->input->post('jam_retur'),
-			'keterangan' => $this->input->post('keterangan'),
-			'kode_petugas' => $this->input->post('kode_petugas'),
-			'nama_petugas' => $this->input->post('nama_petugas'),
-			'id_petugas' => $this->input->post('id_petugas'),
+		$data_upgrade = [
+			'id_iden' => $this->input->post('id_iden'),
+			'no_up' => $this->input->post('no_up'),
+			'no_iden' => $this->input->post('no_iden'),
+			'nama' => $this->input->post('nama'),
+			'kode' => $this->input->post('kode'),
+			'dept' => $this->input->post('dept'),
+			'pic' => $this->input->post('pic'),
 		];
 
-		$retur_id = $this->m_retur->tambah($data_retur);
+		$upgrade_id = $this->m_upgrade->tambah($data_upgrade);
 
-		$data_detail_retur = [];
+		$data_detail_up = [];
 
-		for($i = 0; $i < $jumlah_barang_retur; $i++){
-			$barang = $this->m_barang->lihat_nama_barang($this->input->post('nama_barang_hidden')[$i]);
-			array_push($data_detail_retur, ['no_retur' => $this->input->post('no_retur')]);
-			$data_detail_retur[$i]['retur_id'] = $retur_id;
-			$data_detail_retur[$i]['barang_id'] = $barang->id;
-			$data_detail_retur[$i]['nama_barang'] = $this->input->post('nama_barang_hidden')[$i];
-			$data_detail_retur[$i]['jumlah'] = $this->input->post('jumlah_hidden')[$i];
-			$data_detail_retur[$i]['satuan'] = $this->input->post('satuan_hidden')[$i];
+		for($i = 0; $i < $jumlah_komponen_diterima; $i++){
+			array_push($data_detail_up, ['no_up' => $this->input->post('no_up')]);
+			$data_detail_up[$i]['id_up'] = $det_soft_id;
+			$data_detail_up[$i]['tanggal'] = $this->input->post('tanggal_hidden')[$i];
+			$data_detail_up[$i]['status'] = $this->input->post('status_hidden')[$i];
+			$data_detail_up[$i]['keterangan'] = $this->input->post('keterangan_hidden')[$i];
 		}
-
-		if($retur_id && $this->m_detail_retur->tambah($data_detail_retur)){
-			for ($i=0; $i < $jumlah_barang_retur ; $i++) { 
-				$this->m_barang->plus_stok($data_detail_retur[$i]['jumlah'], $data_detail_retur[$i]['nama_barang']) or die('gagal min stok');
-			}
-			$this->session->set_flashdata('success', 'Invoice <strong>Pengembalian</strong> Berhasil Dibuat!');
-			redirect('retur');
+		
+		if($det_soft_id && $this->m_detail_soft->tambah($data_detail_soft)){
+			$this->session->set_flashdata('success', 'Invoice <strong>Detail Software</strong> Berhasil Dibuat!');
+			redirect('det_soft');
 		}
+	
 	}
 
 	public function proses_edit(){
-		$jumlah_barang_retur = count($this->input->post('nama_barang_hidden'));
-		$no_retur = $this->input->post('no_retur');
-		$data_retur = [
+		$jumlah_barang_terima = count($this->input->post('nama_barang_hidden'));
+		$no_terima = $this->input->post('no_terima');
+		$data_terima = [
 			'keterangan' => $this->input->post('keterangan'),
 		];
 
-		$ubahdata = $this->m_retur->ubah($data_retur, $no_retur);
-		$retur_id = $this->m_retur->lihat_no_retur($no_retur)->id;
+		$ubahdata = $this->m_penerimaan->ubah($data_terima, $no_terima);
+		$penerimaan_id = $this->m_penerimaan->lihat_no_terima($no_terima)->id;
 
 
-		$details = $this->m_detail_retur->lihat_no_retur($no_retur);
+		$details = $this->m_detail_terima->lihat_no_terima($no_terima);
 		foreach ($details as $detail) {
 			$this->m_barang->min_stok($detail->jumlah, $detail->nama_barang);
 		}
-		$this->m_detail_retur->hapus($no_retur);
+		$this->m_detail_terima->hapus($no_terima);
 
-		$data_detail_retur = [];
+		$data_detail_terima = [];
 
-		for($i = 0; $i < $jumlah_barang_retur; $i++){
+		for($i = 0; $i < $jumlah_barang_terima; $i++){
 			$barang = $this->m_barang->lihat_nama_barang($this->input->post('nama_barang_hidden')[$i]);
-			array_push($data_detail_retur, ['no_retur' => $this->input->post('no_retur')]);
-			$data_detail_retur[$i]['retur_id'] = $retur_id;
-			$data_detail_retur[$i]['barang_id'] = $barang->id;
-			$data_detail_retur[$i]['nama_barang'] = $this->input->post('nama_barang_hidden')[$i];
-			$data_detail_retur[$i]['jumlah'] = $this->input->post('jumlah_hidden')[$i];
-			$data_detail_retur[$i]['satuan'] = $this->input->post('satuan_hidden')[$i];
+			array_push($data_detail_terima, ['no_terima' => $this->input->post('no_terima')]);
+			$data_detail_terima[$i]['penerimaan_id'] = $penerimaan_id;
+			$data_detail_terima[$i]['barang_id'] = $barang->id;
+			$data_detail_terima[$i]['nama_barang'] = $this->input->post('nama_barang_hidden')[$i];
+			$data_detail_terima[$i]['jumlah'] = $this->input->post('jumlah_hidden')[$i];
+			$data_detail_terima[$i]['satuan'] = $this->input->post('satuan_hidden')[$i];
 		}
 
-		if($retur_id && $this->m_detail_retur->tambah($data_detail_retur)){
-			for ($i=0; $i < $jumlah_barang_retur ; $i++) {
-				$this->m_barang->plus_stok($data_detail_retur[$i]['jumlah'], $data_detail_retur[$i]['nama_barang']) or die('gagal min stok');
+		if($penerimaan_id && $this->m_detail_terima->tambah($data_detail_terima)){
+			for ($i=0; $i < $jumlah_barang_terima ; $i++) {
+				$this->m_barang->plus_stok($data_detail_terima[$i]['jumlah'], $data_detail_terima[$i]['nama_barang']) or die('gagal min stok');
 			}
-			$this->session->set_flashdata('success', 'Invoice <strong>Pengembalian</strong> Berhasil Diubah!');
-			redirect('retur');
+			$this->session->set_flashdata('success', 'Invoice <strong>Penerimaan</strong> Berhasil Diubah!');
+			redirect('penerimaan');
 		}
 	}
 
-	public function detail($no_retur){
-		$this->data['title'] = 'Detail Pengembalian';
-		$this->data['retur'] = $this->m_retur->lihat_no_retur($no_retur);
-		$this->data['all_detail_retur'] = $this->m_detail_retur->lihat_no_retur($no_retur);
+	public function detail($no_input){
+		$this->data['title'] = 'Detail Identifikasi Software';
+		$this->data['all_detail_soft'] = $this->m_detail_soft->lihat_no_input($no_input);
+		$this->data['det_soft'] = $this->m_det_soft->lihat_no_input($no_input);
 		$this->data['no'] = 1;
 
-		$this->load->view('retur/detail', $this->data);
+		$this->load->view('det_soft/detail', $this->data);
 	}
 
-	public function hapus($no_retur){
-		$details = $this->m_detail_retur->lihat_no_retur($no_retur);
-		foreach ($details as $detail) {
-			$this->m_barang->min_stok($detail->jumlah, $detail->nama_barang);
-		}
-		if($this->m_retur->hapus($no_retur) && $this->m_detail_retur->hapus($no_retur)){
-			$this->session->set_flashdata('success', 'Invoice Pengembalian <strong>Berhasil</strong> Dihapus!');
-			redirect('retur');
+	public function hapus($no_input){
+		if($this->m_det_soft->hapus($no_input) && $this->m_detail_soft->hapus($no_input)){
+			$this->session->set_flashdata('success', 'Identifikasi <strong>Berhasil</strong> Dihapus!');
+			redirect('det_soft');
 		}else {
-			$this->session->set_flashdata('error', 'Invoice Pengembalian <strong>Gagal</strong> Dihapus!');
-			redirect('retur');
+			$this->session->set_flashdata('error', 'Invoice Identifikasi <strong>Gagal</strong> Dihapus!');
+			redirect('det_soft');
 		}
 	}
 
-	public function get_all_barang(){
-		$data = $this->m_barang->lihat_nama_barang($_POST['nama_barang']);
+	public function get_all_identifikasi(){
+		$data = $this->m_identifikasi->lihat_no_iden($_POST['no_iden']);
+		echo json_encode($data);
+	}
+
+	public function get_all_iden(){
+		$data = $this->m_detail_iden->lihat_nama_iden($_POST['komponen']);
 		echo json_encode($data);
 	}
 
 	public function keranjang_barang(){
-		$this->load->view('retur/keranjang');
+		$this->load->view('det_soft/keranjang');
 	}
 
 	public function export(){
 		$dompdf = new Dompdf();
 		
-		// $this->data['perusahaan'] = $this->m_usaha->lihat();
-		$this->data['all_retur'] = $this->m_retur->lihat();
-		$this->data['title'] = 'Laporan Data Pengembalian';
+		$this->data['all_identifikasi'] = $this->m_identifikasi->lihat();
+		$this->data['title'] = 'Laporan Data Identifikasi';
 		$this->data['no'] = 1;
 
-		$dompdf->setPaper('A4', 'Portrait');
-		$html = $this->load->view('retur/report', $this->data, true);
+		$dompdf->setPaper('A4', 'Landscape');
+		$html = $this->load->view('identifikasi/report', $this->data, true);
 		$dompdf->load_html($html);
 		$dompdf->render();
-		$dompdf->stream('Laporan Data Pengembalian Tanggal ' . date('d F Y'), array("Attachment" => false));
+		$dompdf->stream('Laporan Data Identifikasi Tanggal ' . date('d F Y'), array("Attachment" => false));
 	}
 
-	public function export_detail($no_retur){
+	public function export_detail($no_identifikasi){
 		$dompdf = new Dompdf();
-		// $this->data['perusahaan'] = $this->m_usaha->lihat();
-		$this->data['retur'] = $this->m_retur->lihat_no_retur($no_retur);
-		$this->data['all_detail_retur'] = $this->m_detail_retur->lihat_no_retur($no_retur);
-		$this->data['title'] = 'Laporan Detail Pengembalian';
+
+		$this->data['identifikasi'] = $this->m_identifikasi->lihat_no_iden($no_iden);
+		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
+		$this->data['title'] = 'Laporan Detail Penerimaan';
 		$this->data['no'] = 1;
 
-		$dompdf->setPaper('A4', 'Portrait');
-		$html = $this->load->view('retur/detail_report', $this->data, true);
+		$dompdf->setPaper('A4', 'Potrait');
+		$html = $this->load->view('penerimaan/detail_report', $this->data, true);
 		$dompdf->load_html($html);
 		$dompdf->render();
-		$dompdf->stream('Laporan Detail Pengembalian Tanggal ' . date('d F Y'), array("Attachment" => false));
+		$dompdf->stream('Laporan Detail Penerimaan Tanggal ' . date('d F Y'), array("Attachment" => false));
 	}
 
-	public function edit($no_retur){
-		$this->data['title'] 			= 'Edit Pengembalian';
-		$this->data['retur'] 			= $this->m_retur->lihat_no_retur($no_retur);
-		$this->data['all_detail_retur'] = $this->m_detail_retur->get_detail_retur($no_retur);
+	public function edit($no_iden){
+		$this->data['title'] 			= 'Edit Identifikasi';
+		$this->data['identifikasi'] 	= $this->m_identifikasi->lihat_no_iden($no_iden);
+		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
+		$this->data['all_user'] = $this->m_user->lihat_user();
+		$this->data['all_komponen'] = $this->m_komponen->lihat_komponen();
+		$this->data['all_sub'] = $this->m_sub->lihat_sub();
 		$this->data['no'] 				= 1;
-		$this->data['petugas'] 			= $this->m_petugas->get_petugas($this->data['retur']->nama_petugas);
-		$this->data['all_barang'] 		= $this->m_barang->lihat_stok_retur();
 
-		$this->load->view('retur/edit', $this->data);
+		$this->load->view('identifikasi/edit', $this->data);
 	}
 
-	public function get_detail($no_retur){
-		$this->data['all_detail_retur']	= $this->m_detail_retur->get_detail_retur($no_retur);
+	public function get_detail($no_iden){
+		$this->data['all_detail_iden']	= $this->m_detail_iden->get_detail_terima($no_iden);
 		return $this->data;
 	}
 
-	public function delete_detail($id,$no_retur){
-		$jRetur = $this->m_detail_retur->get_by_id($id);
-		$this->m_barang->min_stok($jRetur->jumlah, $jRetur->nama_barang) or die('gagal plus stok');
-		$this->m_detail_retur->delete_id($id);
-		redirect('retur/edit/'.$no_retur);
+	public function delete_detail($id,$no_terima){
+		$jTerima = $this->m_detail_terima->get_by_id($id);
+		$this->m_barang->min_stok($jTerima->jumlah, $jTerima->nama_barang) or die('gagal min stok');
+		$this->m_detail_terima->delete_id($id);
+		redirect('penerimaan/edit/'.$no_terima);
 	}
 
 	public function add_detail(){
 		$data = array([
-			'no_retur'		=> $this->input->post('no_retur'),
+			'no_terima'		=> $this->input->post('no_terima'),
 			'nama_barang'	=> $this->input->post('nama_barang'),
 			'jumlah'		=> $this->input->post('jumlah'),
 			'satuan'		=> $this->input->post('satuan')
 		]);
 		
-		$this->m_detail_retur->tambah($data);
-		$this->m_barang->plus_stok($this->input->post('jumlah'), $this->input->post('nama_barang')) or die('gagal min stok');
+		$this->m_detail_terima->tambah($data);
+		$this->m_barang->plus_stok($this->input->post('jumlah'), $this->input->post('nama_barang')) or die('gagal plus stok');
 		
-		redirect('retur/edit/'.$this->input->post('no_retur'));
+		redirect('penerimaan/edit/'.$this->input->post('no_terima'));
 	}
 }
