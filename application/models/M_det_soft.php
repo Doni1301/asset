@@ -18,8 +18,8 @@ class M_det_soft extends CI_Model {
 		return $query->result();
 	}
 
-	public function lihat_no_input($no_input){
-		return $this->db->get_where($this->_table, ['no_input' => $no_input])->row();
+	public function lihat_no_input($no_iden){
+		return $this->db->get_where($this->_table, ['no_iden' => $no_iden])->row();
 	}
 
 	public function tambah($data){

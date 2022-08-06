@@ -6,7 +6,7 @@ class M_identifikasi extends CI_Model {
 	public function lihat(){
 		return $this->db->get($this->_table)->result();
 	} 
-
+	
 	public function jumlah(){
 		$query = $this->db->get($this->_table);
 		return $query->num_rows();

@@ -20,7 +20,7 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 					<div class="float-right">
-						<a href="<?= base_url('det_soft/export_detail/' . $det_soft->no_input) ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
+						<a href="<?= base_url('det_soft/export_detail/' . $det_soft->no_iden) ?>" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a>
 						<a href="<?= base_url('det_soft') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
 					</div>
 				</div>
@@ -75,6 +75,40 @@
 							</div>
 						</div>
 						<hr>
+						<h5>Identifikasi User:</h5>
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<td><strong>No</strong></td>
+											<td><strong>Komponen</strong></td>
+											<td><strong>Sub Komponen</strong></td>
+											<td><strong>Keterangan</strong></td>
+											<td><strong>Serial Number</strong></td>
+											<td><strong>Exp Garansi</strong></td>
+											<td><strong>Vendor</strong></td>
+
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($all_detail_iden as $detail_iden): ?>
+											<tr>
+												<td><?= $no++ ?></td>
+												<td><?= $detail_iden->komponen ?></td>
+												<td><?= $detail_iden->sub ?></td>
+												<td><?= $detail_iden->keterangan ?></td>
+												<td><?= $detail_iden->sn ?></td>
+												<td><?= $detail_iden->exp ?></td>
+												<td><?= $detail_iden->vendor ?></td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<hr>
+						<h5>Identifikasi Lisensi:</h5>
 						<div class="row">
 							<div class="col-md-12">
 								<table class="table table-bordered">

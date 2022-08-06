@@ -65,43 +65,29 @@ class Identifikasi extends CI_Controller{
 	
 	}
 
-	// public function proses_edit(){
-	// 	$jumlah_barang_terima = count($this->input->post('nama_barang_hidden'));
-	// 	$no_terima = $this->input->post('no_terima');
-	// 	$data_terima = [
-	// 		'keterangan' => $this->input->post('keterangan'),
-	// 	];
+	public function proses_edit(){
+		$jumlah_komponen_diterima = count($this->input->post('komponen_hidden'));
 
-	// 	$ubahdata = $this->m_penerimaan->ubah($data_terima, $no_terima);
-	// 	$penerimaan_id = $this->m_penerimaan->lihat_no_terima($no_terima)->id;
+		$identifikasi_id = $this->m_identifikasi->lihat_no_iden($no_iden)->id;
 
+		$data_detail_iden = [];
 
-	// 	$details = $this->m_detail_terima->lihat_no_terima($no_terima);
-	// 	foreach ($details as $detail) {
-	// 		$this->m_barang->min_stok($detail->jumlah, $detail->nama_barang);
-	// 	}
-	// 	$this->m_detail_terima->hapus($no_terima);
-
-	// 	$data_detail_terima = [];
-
-	// 	for($i = 0; $i < $jumlah_barang_terima; $i++){
-	// 		$barang = $this->m_barang->lihat_nama_barang($this->input->post('nama_barang_hidden')[$i]);
-	// 		array_push($data_detail_terima, ['no_terima' => $this->input->post('no_terima')]);
-	// 		$data_detail_terima[$i]['penerimaan_id'] = $penerimaan_id;
-	// 		$data_detail_terima[$i]['barang_id'] = $barang->id;
-	// 		$data_detail_terima[$i]['nama_barang'] = $this->input->post('nama_barang_hidden')[$i];
-	// 		$data_detail_terima[$i]['jumlah'] = $this->input->post('jumlah_hidden')[$i];
-	// 		$data_detail_terima[$i]['satuan'] = $this->input->post('satuan_hidden')[$i];
-	// 	}
-
-	// 	if($penerimaan_id && $this->m_detail_terima->tambah($data_detail_terima)){
-	// 		for ($i=0; $i < $jumlah_barang_terima ; $i++) {
-	// 			$this->m_barang->plus_stok($data_detail_terima[$i]['jumlah'], $data_detail_terima[$i]['nama_barang']) or die('gagal min stok');
-	// 		}
-	// 		$this->session->set_flashdata('success', 'Invoice <strong>Penerimaan</strong> Berhasil Diubah!');
-	// 		redirect('penerimaan');
-	// 	}
-	// }
+		for($i = 0; $i < $jumlah_komponen_diterima; $i++){
+			array_push($data_detail_iden, ['no_iden' => $this->input->post('no_iden')]);
+			$data_detail_iden[$i]['id_iden'] = $identifikasi_id;
+			$data_detail_iden[$i]['komponen'] = $this->input->post('komponen_hidden')[$i];
+			$data_detail_iden[$i]['sub'] = $this->input->post('sub_hidden')[$i];
+			$data_detail_iden[$i]['keterangan'] = $this->input->post('keterangan_hidden')[$i];
+			$data_detail_iden[$i]['sn'] = $this->input->post('sn_hidden')[$i];
+			$data_detail_iden[$i]['exp'] = $this->input->post('exp_hidden')[$i];
+			$data_detail_iden[$i]['vendor'] = $this->input->post('vendor_hidden')[$i];
+		}
+		
+		if( $this->m_detail_iden->tambah($data_detail_iden)){
+			$this->session->set_flashdata('success', 'Invoice <strong>Identifikasi</strong> Berhasil Dibuat!');
+			redirect('identifikasi');
+		}
+	}
 
 	public function detail($no_iden){
 		$this->data['title'] = 'Detail Identifikasi User';
@@ -165,17 +151,17 @@ class Identifikasi extends CI_Controller{
 		$dompdf->stream('Laporan Detail Penerimaan Tanggal ' . date('d F Y'), array("Attachment" => false));
 	}
 
-	// public function edit($no_iden){
-	// 	$this->data['title'] 			= 'Edit Identifikasi';
-	// 	$this->data['identifikasi'] 	= $this->m_identifikasi->lihat_no_iden($no_iden);
-	// 	$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
-	// 	$this->data['all_user'] = $this->m_user->lihat_user();
-	// 	$this->data['all_komponen'] = $this->m_komponen->lihat_komponen();
-	// 	$this->data['all_sub'] = $this->m_sub->lihat_sub();
-	// 	$this->data['no'] 				= 1;
+	public function edit($no_iden){
+		$this->data['title'] 			= 'Edit Identifikasi';
+		$this->data['identifikasi'] 	= $this->m_identifikasi->lihat_no_iden($no_iden);
+		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
+		$this->data['all_user'] = $this->m_user->lihat_user();
+		$this->data['all_komponen'] = $this->m_komponen->lihat_komponen();
+		$this->data['all_sub'] = $this->m_sub->lihat_sub();
+		$this->data['no'] 				= 1;
 
-	// 	$this->load->view('identifikasi/edit', $this->data);
-	// }
+		$this->load->view('identifikasi/edit', $this->data);
+	}
 
 	// public function get_detail($no_iden){
 	// 	$this->data['all_detail_iden']	= $this->m_detail_iden->get_detail_terima($no_iden);

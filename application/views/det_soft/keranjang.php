@@ -3,6 +3,10 @@
 		<?= $this->input->post('komponen') ?>
 		<input type="hidden" name="komponen_hidden[]" value="<?= $this->input->post('komponen') ?>">
 	</td>
+	<td class="no_iden">
+		<?= $this->input->post('no_iden') ?>
+		<input type="hidden" name="no_iden_hidden[]" value="<?= $this->input->post('no_iden') ?>">
+	</td>
 	<td class="keterangan">
 		<?= $this->input->post('keterangan') ?>
 		<input type="hidden" name="keterangan_hidden[]" value="<?= $this->input->post('keterangan') ?>">

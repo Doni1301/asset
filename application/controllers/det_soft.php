@@ -52,6 +52,7 @@ class Det_soft extends CI_Controller{
 		for($i = 0; $i < $jumlah_komponen_diterima; $i++){
 			array_push($data_detail_soft, ['no_input' => $this->input->post('no_input')]);
 			$data_detail_soft[$i]['id_input'] = $det_soft_id;
+			$data_detail_soft[$i]['no_iden'] = $this->input->post('no_iden_hidden')[$i];
 			$data_detail_soft[$i]['komponen'] = $this->input->post('komponen_hidden')[$i];
 			$data_detail_soft[$i]['keterangan'] = $this->input->post('keterangan_hidden')[$i];
 			$data_detail_soft[$i]['produk'] = $this->input->post('produk_hidden')[$i];
@@ -103,10 +104,11 @@ class Det_soft extends CI_Controller{
 	// 	}
 	// }
 
-	public function detail($no_input){
+	public function detail($no_iden){
 		$this->data['title'] = 'Detail Identifikasi Software';
-		$this->data['all_detail_soft'] = $this->m_detail_soft->lihat_no_input($no_input);
-		$this->data['det_soft'] = $this->m_det_soft->lihat_no_input($no_input);
+		$this->data['all_detail_soft'] = $this->m_detail_soft->lihat_no_input($no_iden);
+		$this->data['all_detail_iden'] = $this->m_detail_iden->lihat_no_iden($no_iden);
+		$this->data['det_soft'] = $this->m_det_soft->lihat_no_input($no_iden);
 		$this->data['no'] = 1;
 
 		$this->load->view('det_soft/detail', $this->data);

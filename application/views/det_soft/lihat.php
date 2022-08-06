@@ -68,7 +68,7 @@
 											<td><?= $det_soft->dept ?></td>
 											<td><?= $det_soft->pic ?></td>
 											<td>
-												<a href="<?= base_url('det_soft/detail/' . $det_soft->no_input) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+												<a href="<?= base_url('det_soft/detail/' . $det_soft->no_iden) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
 												<a href="<?= base_url('det_soft/edit/'.$det_soft->no_input) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
 												<a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('det_soft/hapus/' . $det_soft->no_input) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 											</td>

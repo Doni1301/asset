@@ -81,7 +81,7 @@
 											<h5>Data Input</h5>
 											<hr>
 											<div class="form-row">
-												<div class="form-group col-3">
+												<div class="form-group col-2">
 													<label for="komponen">Komponen</label>
 													<select name="komponen" id="komponen" class="form-control">
 														<option value="">Pilih Komponen</option>
@@ -90,7 +90,11 @@
 														<?php endforeach ?>
 													</select>
 												</div>
-												<div class="form-group col-3">
+												<div class="form-group col-2">
+													<label>No Identifikasi</label>
+													<input type="text" name="no_iden" value="" readonly class="form-control">
+												</div>
+												<div class="form-group col-2">
 													<label>Merk/Type/Model</label>
 													<input type="text" name="keterangan" value="" class="form-control">
 												</div>
@@ -116,6 +120,7 @@
 											<thead>
 												<tr>
 													<td>Komponen</td>
+													<td>No Identifikasi</td>
 													<td>Keterangan</td>
 													<td>Produk</td>
 													<td>Vendor</td>
@@ -169,6 +174,7 @@
 						data: {no_iden: $(this).val()},
 						success: function(data){
 							$('input[name="id_iden"]').val(data.id)
+							$('input[name="no_iden"]').val(data.no_iden)
 							$('input[name="nama"]').val(data.nama)
 							$('input[name="kode"]').val(data.kode)
 							$('input[name="dept"]').val(data.dept)
@@ -182,6 +188,7 @@
 			$(document).on('click', '#tambah', function(e){
 				const url_keranjang_barang = $('#content').data('url') + '/keranjang_barang'
 				const data_keranjang = {
+					no_iden: $('select[name="no_iden"]').val(),
 					komponen: $('select[name="komponen"]').val(),
 					keterangan: $('input[name="keterangan"]').val(),
 					produk: $('input[name="produk"]').val(),	
@@ -211,6 +218,7 @@
 			})
 
 			$('button[type="submit"]').on('click', function(){
+				$('input[name="no_iden"]').prop('disabled', true)
 				$('input[name="komponen"]').prop('disabled', true)
 				$('input[name="keterangan"]').prop('disabled', true)
 				$('input[name="produk"]').prop('disabled', true)

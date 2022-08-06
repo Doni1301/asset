@@ -162,7 +162,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="5" align="center">
+                                                <td colspan="7" align="center">
                                                     <input type="hidden" name="max_hidden" value="">
                                                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;Simpan</button>
                                                 </td>
@@ -192,7 +192,7 @@
 			   	}
 			})
 
-            $('#nama').on('change', function(){
+            $('#komponen').on('change', function(){
 				console.log($(this).val());
 				if($(this).val() == '') reset()
 				else {
@@ -203,9 +203,6 @@
 						dataType: 'json',
 						data: {nama: $(this).val()},
 						success: function(data){
-							$('input[name="kode"]').val(data.kode)
-							$('input[name="dept"]').val(data.dept)
-							$('input[name="pic"]').val(data.pic)
 							$('button#tambah').prop('disabled', false)
 						}
 					})
@@ -235,11 +232,6 @@
 					}
 				})
             })
-
-            var detail_iden = $( "table#keranjang tbody" ).find("button[data-nama-komponen]");
-            detail_iden.each(function(i){
-                    $('option[value="' + $(this).data('nama-komponen') + '"]').hide()
-            });
 
             $(document).on('click', '#tombol-hapus', function(){
 				$(this).closest('.row-keranjang').remove()
