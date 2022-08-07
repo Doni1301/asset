@@ -174,6 +174,7 @@
                                                 <td colspan="7" align="center">
                                                     <input type="hidden" name="max_hidden" value="">
                                                     <button type="submit" class="btn btn-primary"  name="submit" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Simpan</button>
+													<a href="<?= base_url('identifikasi') ?>" class="btn btn-secondary"><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali</a>
                                                 </td>
                                             </tr>
                                         </tfoot>
