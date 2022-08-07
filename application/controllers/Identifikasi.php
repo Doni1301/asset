@@ -68,13 +68,11 @@ class Identifikasi extends CI_Controller{
 	public function proses_edit(){
 		$jumlah_komponen_diterima = count($this->input->post('komponen_hidden'));
 
-		$identifikasi_id = $this->m_identifikasi->lihat_no_iden($no_iden)->id;
-
 		$data_detail_iden = [];
 
 		for($i = 0; $i < $jumlah_komponen_diterima; $i++){
 			array_push($data_detail_iden, ['no_iden' => $this->input->post('no_iden')]);
-			$data_detail_iden[$i]['id_iden'] = $identifikasi_id;
+			$data_detail_iden[$i]['id_iden'] = $this->input->post('id_iden_hidden')[$i];
 			$data_detail_iden[$i]['komponen'] = $this->input->post('komponen_hidden')[$i];
 			$data_detail_iden[$i]['sub'] = $this->input->post('sub_hidden')[$i];
 			$data_detail_iden[$i]['keterangan'] = $this->input->post('keterangan_hidden')[$i];
@@ -162,30 +160,4 @@ class Identifikasi extends CI_Controller{
 
 		$this->load->view('identifikasi/edit', $this->data);
 	}
-
-	// public function get_detail($no_iden){
-	// 	$this->data['all_detail_iden']	= $this->m_detail_iden->get_detail_terima($no_iden);
-	// 	return $this->data;
-	// }
-
-	// public function delete_detail($id,$no_terima){
-	// 	$jTerima = $this->m_detail_terima->get_by_id($id);
-	// 	$this->m_barang->min_stok($jTerima->jumlah, $jTerima->nama_barang) or die('gagal min stok');
-	// 	$this->m_detail_terima->delete_id($id);
-	// 	redirect('penerimaan/edit/'.$no_terima);
-	// }
-
-	// public function add_detail(){
-	// 	$data = array([
-	// 		'no_terima'		=> $this->input->post('no_terima'),
-	// 		'nama_barang'	=> $this->input->post('nama_barang'),
-	// 		'jumlah'		=> $this->input->post('jumlah'),
-	// 		'satuan'		=> $this->input->post('satuan')
-	// 	]);
-		
-	// 	$this->m_detail_terima->tambah($data);
-	// 	$this->m_barang->plus_stok($this->input->post('jumlah'), $this->input->post('nama_barang')) or die('gagal plus stok');
-		
-	// 	redirect('penerimaan/edit/'.$this->input->post('no_terima'));
-	// }
 }

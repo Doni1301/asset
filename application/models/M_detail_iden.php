@@ -7,6 +7,10 @@ class M_detail_iden extends CI_Model {
 		return $this->db->insert_batch($this->_table, $data);
 	}
 
+	public function tambah_id($data){
+		return $this->db->insert($this->_table, $data);
+	}
+
 	public function lihat_no_iden($no_iden){
 		$query = $this->db->get_where($this->_table, ['no_iden'=>$no_iden]);
 		return $query->result();
@@ -17,10 +21,10 @@ class M_detail_iden extends CI_Model {
 	}
 
 	public function get_detail_iden($no_iden){
-		$this->db->select('barang.kode_barang, detail_terima.*');
-		$this->db->from('detail_terima');
-		$this->db->join('barang', 'detail_terima.nama_barang=barang.nama_barang');
-		$this->db->where(['no_terima' => $no_terima]);
+		$this->db->select('identifikasi.id, detail_iden.*');
+		$this->db->from('detail_iden');
+		$this->db->join('identifikasi', 'detail_iden.id_iden=identifikasi.id');
+		$this->db->where(['no_iden' => $no_iden]);
 		$query = $this->db->get();
 		return $query->result();
 	}

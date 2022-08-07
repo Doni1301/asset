@@ -6,6 +6,13 @@ class M_identifikasi extends CI_Model {
 	public function lihat(){
 		return $this->db->get($this->_table)->result();
 	} 
+
+	public function lihat_id_iden($id){
+		$query = $this->db->select('*');
+		$query = $this->db->where(['id' => $id]);
+		$query = $this->db->get($this->_table);
+		return $query->row();
+	}
 	
 	public function jumlah(){
 		$query = $this->db->get($this->_table);

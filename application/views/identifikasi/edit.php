@@ -29,7 +29,7 @@
 						<div class="card shadow">
 							<div class="card-header"><strong>Isi Form Dibawah Ini!</strong></div>
 							<div class="card-body">
-                                <form action="<?= base_url('identifikasi/proses_edit') ?>" id="form-edit" method="POST">
+                                <form action="<?= base_url('identifikasi/proses_edit') ?>" id="form-edit" method="POST" class="form-disable">
                             <h5>Data Identifikasi</h5>
                                 <hr>
                                 <div class="form-row">
@@ -77,7 +77,7 @@
 											<h5>Data Input</h5>
 											<hr>
 											<div class="form-row">
-												<div class="form-group col-2">
+												<div class="form-group col-3">
 													<label for="komponen">Komponen</label>
 													<select name="komponen" id="komponen" class="form-control">
 														<option value="">Pilih Komponen</option>
@@ -86,7 +86,7 @@
 														<?php endforeach ?>
 													</select>
 												</div>
-												<div class="form-group col-2">
+												<div class="form-group col-3">
 													<label for="sub">Sub Komponen</label>
 													<select name="sub" id="sub" class="form-control">
 														<option value="">Pilih Sub Komponen</option>
@@ -95,26 +95,35 @@
 														<?php endforeach ?>
 													</select>
 												</div>
-												<div class="form-group col-2">
-													<label>Merk/Type/Model</label>
-													<input type="text" name="keterangan" value="" class="form-control">
+												<div class="form-group col-3">
+													<input type="hidden" name="id_iden" value="<?= $identifikasi->id ?>" class="form-control" readonly>
 												</div>
-												<div class="form-group col-2">
-													<label>Serial Number</label>
-													<input type="text" name="sn" value="" class="form-control">
-												</div>
-												<div class="form-group col-1">
-													<label>Exp Garansi</label>
-													<input type="text" name="exp" value="" class="form-control">
-												</div>
-												<div class="form-group col-2">
-													<label>Vendor</label>
-													<input type="text" name="vendor" value="" class="form-control">
-												</div>
-												<div class="form-group col-1">
-													<label for="">&nbsp;</label>
-													<button disabled type="button" class="btn btn-primary btn-block" id="tambah"><i class="fa fa-plus"></i></button>
-												</div>
+											</div>
+										</div>
+								</div>
+								<div class="row">		
+										<div class="col-md-12">
+											<div class="form-row">
+													<div class="form-group col-3">
+														<label>Merk/Type/Model</label>
+														<input type="text" name="keterangan" value="" class="form-control">
+													</div>
+													<div class="form-group col-3">
+														<label>Serial Number</label>
+														<input type="text" name="sn" value="" class="form-control">
+													</div>
+													<div class="form-group col-2">
+														<label>Exp Garansi</label>
+														<input type="text" name="exp" value="" class="form-control">
+													</div>
+													<div class="form-group col-3">
+														<label>Vendor</label>
+														<input type="text" name="vendor" value="" class="form-control">
+													</div>
+													<div class="form-group col-1">
+														<label for="">&nbsp;</label>
+														<button disabled type="button" class="btn btn-primary btn-block" id="tambah"><i class="fa fa-plus"></i></button>
+													</div>
 											</div>
 										</div>
 								</div>
@@ -124,18 +133,21 @@
                                     <table class="table table-bordered" id="keranjang">
                                         <thead>
                                             <tr>
+												<td>id iden</td>
                                                 <td>Komponen</td>
 												<td>Sub Komponen</td>
 												<td>Keterangan</td>
 												<td>Serial Number</td>
 												<td>Exp Garansi</td>
 												<td>Vendor</td>
-												<td>Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach($all_detail_iden as $key => $diden): ?>
                                                 <tr class="row-keranjang">
+													<td class="id_iden"><?= $diden->id_iden ?>
+                                                        <input type="hidden" name="nama_barang_hidden[]" value="<?= $diden->id_iden ?>">
+                                                    </td>
                                                     <td class="komponen"><?= $diden->komponen ?>
                                                         <input type="hidden" name="nama_barang_hidden[]" value="<?= $diden->komponen ?>">
                                                     </td>
@@ -154,9 +166,6 @@
                                                     <td class="vendor"><?= $diden->vendor ?>
                                                         <input type="hidden" name="satuan_hidden[]" value="<?= $diden->vendor ?>">
                                                     </td>
-                                                    <td class="aksi">
-                                                        <button type="button" class="btn btn-danger btn-sm" id="tombol-hapus" data-nama-komponen="<?= $diden->komponen ?>"><i class="fa fa-trash"></i></button>
-                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -164,7 +173,7 @@
                                             <tr>
                                                 <td colspan="7" align="center">
                                                     <input type="hidden" name="max_hidden" value="">
-                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;Simpan</button>
+                                                    <button type="submit" class="btn btn-primary"  name="submit" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Simpan</button>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -187,7 +196,7 @@
             // $('tfoot').hide()
            
 			$(document).keypress(function(event){
-		    	if (event.which == '13') {
+		    	if (event.which == '10') {
 		      		event.preventDefault();
 			   	}
 			})
@@ -204,6 +213,7 @@
 						data: {nama: $(this).val()},
 						success: function(data){
 							$('button#tambah').prop('disabled', false)
+							$('button[type="submit"]').prop('disabled', false)
 						}
 					})
 				}
@@ -212,6 +222,7 @@
             $(document).on('click', '#tambah', function(e){
                 const url_keranjang_barang = $('#content').data('url') + '/keranjang_barang'
                 const data_keranjang = {
+					id_iden: $('input[name="id_iden"]').val(),
 					komponen: $('select[name="komponen"]').val(),
 					sub: $('select[name="sub"]').val(),
 					keterangan: $('input[name="keterangan"]').val(),
@@ -233,15 +244,8 @@
 				})
             })
 
-            $(document).on('click', '#tombol-hapus', function(){
-				$(this).closest('.row-keranjang').remove()
-
-				$('option[value="' + $(this).data('komponen').data('sub') + '"]').show()
-
-				if($('tbody').children().length == 0) $('tfoot').hide()
-			})
-
             $('button[type="submit"]').on('click', function(){
+				$('input[name="id_iden"]').prop('disabled', true)
 				$('input[name="komponen"]').prop('disabled', true)
 				$('select[name="sub"]').prop('disabled', true)
 				$('input[name="keterangan"]').prop('disabled', true)

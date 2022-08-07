@@ -43,10 +43,14 @@
 			</div>
 	</div>
 	<?php $this->load->view('partials/js.php') ?>
-	<script src="<?= base_url('sb-admin') ?>/vendor/chart.js/Chart.min.js"></script>
-	<script src="<?= base_url('sb-admin/js/demo/datatables-demo.js') ?>"></script>
-	<script src="<?= base_url('sb-admin') ?>/vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="<?= base_url('sb-admin') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<script	script>
+	window.setTimeout(function() {
+		$(".alert").fadeTo(500, 0).slideUp(500, function(){
+		$(this).remove(); 
+		});
+	}, 500);
+	</script>
 	
 </body>
 </html>

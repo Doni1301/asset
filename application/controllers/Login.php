@@ -29,7 +29,9 @@ class Login extends CI_Controller{
 					'jam_masuk' => date('H:i:s')
 				];
 
-				$this->session->set_userdata('login', $session);
+				$log_otomatis = ['Las_active_time'=>time()];
+
+				$this->session->set_userdata('login', $session, $log_otomatis);
 				$this->session->set_flashdata('success-login', '<strong>Login</strong> Berhasil!');
 				redirect('dashboard');
 			} else {

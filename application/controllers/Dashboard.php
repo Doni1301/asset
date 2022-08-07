@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller{
 
 	public function index(){
 		$this->data['title'] = 'Halaman Dashboard';
+		
 		$this->load->view('dashboard', $this->data);
 	}
 }
