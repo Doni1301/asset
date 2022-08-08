@@ -19,7 +19,4 @@
 		<?= $this->input->post('vendor') ?>
 		<input type="hidden" name="vendor_hidden[]" value="<?= $this->input->post('vendor') ?>">
 	</td>
-	<td class="aksi">
-		<button type="button" class="btn btn-danger btn-sm" id="tombol-hapus" data-nama-barang="<?= $this->input->post('komponen') ?>"><i class="fa fa-trash"></i></button>
-	</td>
 </tr>
